@@ -81,6 +81,7 @@ Vec3 F(Vect v, double *par)
     double beta = par[1];
     double m0 = par[2];
     double m1 = par[3];
+    double gamma = par[4];
 
     double non_linear_component = m1 * v.q.x + 0.5 * (m0 - m1) * (fabs(v.q.x + 1) - fabs(v.q.x - 1));
 
@@ -88,7 +89,7 @@ Vec3 F(Vect v, double *par)
 
     dqdt.x = alpha * (v.q.y - v.q.x - non_linear_component);
     dqdt.y = v.q.x - v.q.y + v.q.z;
-    dqdt.z = -beta * v.q.y;
+    dqdt.z = -beta * v.q.y - gamma * v.q.z;
 
     return dqdt;
 }
@@ -105,21 +106,23 @@ int main(int argc, char const *argv[])
     // Circuit parameters
     /* double alpha = 15.6;
     double beta = 25; // varing from 25 to 51 # 35 doppio periodo # 33.8 quadruplo peiodo
+    double gamma = 0.005;
     double m0 = -1.1428;
     double m1 = -0.71428; */
 
     double alpha = 8.4;
-    double beta = 12; // varing from 25 to 51 # 35 doppio periodo # 33.8 quadruplo peiodo
+    double beta = 12.; // varing from 25 to 51 # 35 doppio periodo # 33.8 quadruplo peiodo
     double m0 = -0.121;
-    double m1 = -1.143;
+    double m1 = -1.09;
+    double gamma = 0.005;
 
     int N_lyap_step = 10;
     int N_cutoff = 0;
     int max_N_Propagations = 20000;
     for (size_t N_propagations = 20000; N_propagations <= max_N_Propagations; N_propagations += 100)
     {
-        Vect v = {0, (Vec3){5, 5, 0}};
-        double par[4] = {alpha, beta, m0, m1};
+        Vect v = {0, (Vec3){6, 6, 0.0001}};
+        double par[5] = {alpha, beta, m0, m1, gamma};
 
         Vec3 lyapunov_exp = {0, 0, 0};
 

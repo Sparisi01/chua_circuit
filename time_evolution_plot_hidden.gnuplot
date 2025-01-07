@@ -6,6 +6,9 @@ set title "Time evolution"
 
 set view 63, 45
 
+set xrange [-6:6]
+set yrange [-6:6]
+
 set ylabel 'y'
 set xlabel 'x'
 set zlabel 'z'
@@ -14,5 +17,6 @@ unset xtics
 unset ytics
 unset ztics
 
-splot "./data/hidden_attractor/time_evolution_data.dat" using 2:3:4 w l lw 1 notitle, \
- "./data/hidden_attractor/time_evolution_data_1.dat" using 2:3:4 w l lw 1 notitle
+plot "./data/hidden_attractor/time_evolution_data.dat" using 2:3 w l lw 1 notitle, \
+"./data/hidden_attractor/time_evolution_nascosto.dat" using 2:3 w l lw 1 notitle, \
+"./data/hidden_attractor/time_evolution_origine.dat" using 2:3 w l lw 1 notitle
